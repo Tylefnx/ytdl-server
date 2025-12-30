@@ -2,6 +2,10 @@ YTDL-Server: Robust Media Ingestion Backend
 
 A high-performance, concurrent YouTube-to-MP4 processing server written in Go. Resolves DASH streams internally and muxes them via FFmpeg. Built for stability across low-power home servers and high-core-count workstations.
 
+
+Disclaimer: This tool is for educational purposes and personal use only. Users are responsible for complying with YouTube's Terms of Service and local copyright laws.
+
+
 🚀 Key Features
 
     Native Resolution: Handles YouTube stream resolution internally via Go (no yt-dlp dependency).
