@@ -15,50 +15,70 @@ A high-performance, concurrent YouTube-to-MP4 processing server written in Go. R
 
 🛠️ Prerequisites
 
+plaintext
+```
     Go 1.21+
 
     FFmpeg (compiled with libx264 support)
 
     gmake (Required on FreeBSD) or make (On Linux)
 
+```
+
 📦 Installation & Setup
 1. Initialize Configuration
 
 The project uses a Single Source of Truth model. You only edit .ytdl-config. The system handles the rest.
 Bash
-
+```
 cp .ytdl-config.example .ytdl-config
+
+```
+
 # Set your paths, service user, CORS origins, and resource limits
+
+bash
+```
 nano .ytdl-config
+
+```
 
 2. Automated Setup
 
 The Makefile validates your configuration and generates the runtime .env file required by both the binary and Docker:
+
 Bash
 
+```
 make setup
 
+```
 3. Install to System
 
 Compiles the binary, sets directory permissions for the SERVICE_USER, and registers the service script. Note: Requires root privileges.
 Bash
+```
 
 make install
 
+```
 4. Service Management
 
 Gentoo (OpenRC):
 Bash
-
+```
 rc-update add ytdl-server default
 rc-service ytdl-server start
 
+```
 FreeBSD:
 Bash
 
+```
 sysrc ytdl_server_enable=YES
 service ytdl_server start
 
+```
 
 🐍 Client Integration Example
 
@@ -131,7 +151,6 @@ if __name__ == "__main__":
 
 📂 Project Structure
 Plaintext
-
 ```
 
 .
@@ -249,6 +268,17 @@ docker-compose up -d
 
     Test locally: make build && ./ytdl-server
 
-    Cross-compile (FreeBSD): make build-freebsd
+    Cross-compile (FreeBSD): 
 
-    Full Deploy: make install
+bash
+```
+make build-freebsd
+
+```
+    Full Deploy: 
+
+bash
+```
+make install
+
+```
