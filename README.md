@@ -175,10 +175,13 @@ Plaintext
 🐳 Docker Deployment
 
 The project uses a Multi-Stage Dockerfile to ensure a small footprint and maximum security. The image consumes the .env file generated during the make setup phase.
+
 1. The Dockerfile
 
 Create a file named Dockerfile in your root directory:
 Dockerfile
+
+```
 
 # --- Stage 1: Build ---
 FROM golang:1.21-alpine AS builder
@@ -201,6 +204,8 @@ RUN mkdir -p temp downloads && chown -R daemon:daemon /app
 USER daemon
 EXPOSE 8080
 CMD ["./ytdl-server"]
+
+```
 
 2. Docker Compose
 
