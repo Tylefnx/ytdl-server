@@ -67,7 +67,6 @@ Gentoo (OpenRC):
 ```
 rc-update add ytdl-server default
 rc-service ytdl-server start
-
 ```
 
 FreeBSD:
@@ -75,7 +74,6 @@ FreeBSD:
 ```
 sysrc ytdl_server_enable=YES
 service ytdl_server start
-
 ```
 
 🐍 Client Integration Example
@@ -197,7 +195,6 @@ The project uses a Multi-Stage Dockerfile to ensure a small footprint and maximu
 Create a file named Dockerfile in your root directory:
 
 ```
-
 # --- Stage 1: Build ---
 FROM golang:1.21-alpine AS builder
 RUN apk add --no-cache make git
@@ -272,7 +269,6 @@ make build && ./ytdl-server
 Cross-compile (FreeBSD): 
 
 ```
-
 make build-freebsd
 
 ```
