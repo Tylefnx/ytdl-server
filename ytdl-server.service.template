@@ -1,0 +1,31 @@
+[Unit]
+Description=Robust Media Delivery Service (Go & FFmpeg)
+After=network.target
+
+[Service]
+# The user and group that will execute the binary
+User={{USER}}
+Group={{USER}}
+
+# The working directory for the process
+WorkingDirectory={{DIR}}
+
+# Load environment variables from our central .env file
+EnvironmentFile={{CONF}}
+
+# Path to the executable binary
+ExecStart=/usr/local/bin/ytdl-server
+
+# Restart policy for stability (auto-restart on crash)
+Restart=always
+RestartSec=5
+
+# Standard output/error logging
+StandardOutput=append:{{DIR}}/output.log
+StandardError=append:{{DIR}}/error.log
+
+# Security hardening (optional but recommended)
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

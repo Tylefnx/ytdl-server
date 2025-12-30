@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# PROVIDE: ytdl_server
+# REQUIRE: LOGIN DAEMON NETWORKING
+# KEYWORD: shutdown
+
+. /etc/rc.subr
+
+name="ytdl_server"
+rcvar="ytdl_server_enable"
+
+# Load environment variables from .env
+if [ -f "{{CONF}}" ]; then
+    export $(grep -v '^#' "{{CONF}}" | xargs)
+fi
+
+load_rc_config $name
+
+: ${ytdl_server_enable:="NO"}
+: ${ytdl_server_user:="{{USER}}"}
+: ${ytdl_server_dir:="{{DIR}}"}
+
+pidfile="/var/run/${name}.pid"
+procname="/usr/local/bin/ytdl-server"
+command="/usr/sbin/daemon"
+command_args="-f -p ${pidfile} -u ${ytdl_server_user} ${procname}"
+
+# Ensure directories exist before starting
+start_precmd="ytdl_server_prestart"
+
+ytdl_server_prestart()
+{
+    /usr/bin/install -d -o ${ytdl_server_user} -m 0755 {{DIR}}
+    /usr/bin/install -d -o ${ytdl_server_user} -m 0755 ${DOWNLOAD_DIR}
+    /usr/bin/install -d -o ${ytdl_server_user} -m 0755 ${TEMP_DIR}
+}
+
+run_rc_command "$1"

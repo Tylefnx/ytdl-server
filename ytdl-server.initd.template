@@ -1,0 +1,24 @@
+#!/sbin/openrc-run
+
+description="Robust Media Delivery Service"
+
+# Load environment variables from the central .env file
+if [ -f "{{CONF}}" ]; then
+    export $(grep -v '^#' "{{CONF}}" | xargs)
+fi
+
+command="/usr/local/bin/ytdl-server"
+command_user="{{USER}}:{{USER}}"
+directory="{{DIR}}"
+
+command_background="yes"
+pidfile="/run/${RC_SVCNAME}.pid"
+
+output_log="{{DIR}}/output.log"
+error_log="{{DIR}}/error.log"
+
+start_pre() {
+    checkpath --directory --owner ${command_user} --mode 0755 "{{DIR}}"
+    checkpath --directory --owner ${command_user} --mode 0755 "${DOWNLOAD_DIR}"
+    checkpath --directory --owner ${command_user} --mode 0755 "${TEMP_DIR}"
+}

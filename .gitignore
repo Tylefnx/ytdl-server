@@ -1,0 +1,44 @@
+# --- Binaries & Executables ---
+ytdl-server
+ytdl-server-freebsd
+ytdl-server-linux
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# --- Configuration (Private) ---
+# We keep the .example but ignore the actual local configs
+.ytdl-config
+.env
+
+# --- Data & Workspaces ---
+# Ignore the actual downloaded files and temp processing
+downloads/
+temp/
+/var/lib/ytdl-server/
+
+# --- Logs ---
+*.log
+output.log
+error.log
+
+# --- Go Dependencies & Build Artifacts ---
+vendor/
+obj/
+bin/
+*.test
+*.out
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
+.directory
+
+# --- Editor Specific ---
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
