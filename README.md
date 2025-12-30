@@ -1,6 +1,7 @@
 YTDL-Server: Robust Media Ingestion Backend
 
 A high-performance, concurrent YouTube-to-MP4 processing server written in Go. Resolves DASH streams internally and muxes them via FFmpeg. Built for stability across low-power home servers and high-core-count workstations.
+
 🚀 Key Features
 
     Native Resolution: Handles YouTube stream resolution internally via Go (no yt-dlp dependency).
@@ -15,7 +16,6 @@ A high-performance, concurrent YouTube-to-MP4 processing server written in Go. R
 
 🛠️ Prerequisites
 
-plaintext
 ```
     Go 1.21+
 
@@ -29,7 +29,7 @@ plaintext
 1. Initialize Configuration
 
 The project uses a Single Source of Truth model. You only edit .ytdl-config. The system handles the rest.
-Bash
+
 ```
 cp .ytdl-config.example .ytdl-config
 
@@ -37,7 +37,7 @@ cp .ytdl-config.example .ytdl-config
 
 # Set your paths, service user, CORS origins, and resource limits
 
-bash
+
 ```
 nano .ytdl-config
 
@@ -47,7 +47,6 @@ nano .ytdl-config
 
 The Makefile validates your configuration and generates the runtime .env file required by both the binary and Docker:
 
-Bash
 
 ```
 make setup
@@ -56,23 +55,22 @@ make setup
 3. Install to System
 
 Compiles the binary, sets directory permissions for the SERVICE_USER, and registers the service script. Note: Requires root privileges.
-Bash
-```
 
+```
 make install
 
 ```
 4. Service Management
 
 Gentoo (OpenRC):
-Bash
+
 ```
 rc-update add ytdl-server default
 rc-service ytdl-server start
 
 ```
+
 FreeBSD:
-Bash
 
 ```
 sysrc ytdl_server_enable=YES
@@ -150,9 +148,8 @@ if __name__ == "__main__":
 ```
 
 📂 Project Structure
-Plaintext
-```
 
+```
 .
 ├── cmd/
 │   └── server/
@@ -198,7 +195,6 @@ The project uses a Multi-Stage Dockerfile to ensure a small footprint and maximu
 1. The Dockerfile
 
 Create a file named Dockerfile in your root directory:
-Dockerfile
 
 ```
 
@@ -266,18 +262,23 @@ docker-compose up -d
 
 🛠️ Contribution & Development
 
-    Test locally: make build && ./ytdl-server
+Test locally: 
 
-    Cross-compile (FreeBSD): 
-
-bash
 ```
+make build && ./ytdl-server
+
+```
+
+Cross-compile (FreeBSD): 
+
+```
+
 make build-freebsd
 
 ```
-    Full Deploy: 
 
-bash
+Full Deploy: 
+
 ```
 make install
 
