@@ -132,6 +132,8 @@ if __name__ == "__main__":
 📂 Project Structure
 Plaintext
 
+```
+
 .
 ├── cmd/
 │   └── server/
@@ -155,6 +157,8 @@ Plaintext
 ├── Makefile                  # Cross-platform build & Setup automation
 ├── .ytdl-config.example      # Master config template
 └── README.md                 # Project documentation
+
+```
 
 🛡️ Security & Hardening
 
