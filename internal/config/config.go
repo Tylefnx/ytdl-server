@@ -24,6 +24,7 @@ func Load() *Config {
 		CleanupAfter:      time.Duration(getEnvAsInt("CLEAN_UP_AFTER_MINUTES", 15)) * time.Minute,
 		DownloadDir:       getEnv("DOWNLOAD_DIR", "downloads"),
 		TempDir:           getEnv("TEMP_DIR", "temp"),
+		WebDir:			   getEnv("WEB_DIR", "./web")
 	}
 
 	// 🛡️ Post-load Validation
