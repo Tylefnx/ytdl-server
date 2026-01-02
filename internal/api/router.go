@@ -2,9 +2,12 @@ package api
 
 import (
 	"net/http"
+    "mime"
 )
 
 func NewRouter(h *Handler) http.Handler {
+    mime.AddExtensionType(".js", "application/javascript")
+    mime.AddExtensionType(".wasm", "application/wasm")
     mux := http.NewServeMux()
 
     mux.HandleFunc("/api/job", h.CreateJob)
@@ -14,6 +17,6 @@ func NewRouter(h *Handler) http.Handler {
 
     fs := http.FileServer(http.Dir("./web")) 
     mux.Handle("/", fs)
-    
+
     return CORSMiddleware(mux)
 }
