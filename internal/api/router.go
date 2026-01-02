@@ -12,5 +12,8 @@ func NewRouter(h *Handler) http.Handler {
     mux.HandleFunc("/api/events/", h.SSE)
     mux.HandleFunc("/api/download/", h.Download)
 
+    fs := http.FileServer(http.Dir("./web")) 
+    mux.Handle("/", fs)
+    
     return CORSMiddleware(mux)
 }
