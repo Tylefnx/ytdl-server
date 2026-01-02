@@ -22,7 +22,7 @@ func Process(job *models.Job, quality string, tempDir string, onProgress Progres
 	client := youtube.Client{}
 	video, err := client.GetVideo(job.VideoID)
 	if err != nil {
-		return fmt.Errorf("video info error: %v", err)
+		return fmt.Errorf("video info error: %v", wrapError(err))
 	}
 
 	targetHeight := parseQuality(quality)
@@ -48,12 +48,14 @@ func Process(job *models.Job, quality string, tempDir string, onProgress Progres
 		mu.Lock()
 		defer mu.Unlock()
 		currentBytes += int64(n)
+		// engine.go içinde yüzde hesaplanan yer
 		if totalSize > 0 {
-			pct := float64(currentBytes) / float64(totalSize) * 100
-			if pct > 99 {
-				pct = 99
-			}
-			onProgress(pct)
+    		pct := float64(currentBytes) / float64(totalSize) * 100
+    		if pct > 99.9 {
+        	pct = 99.9
+    	}
+    	onProgress(pct) 
+		
 		}
 	}
 
@@ -194,4 +196,23 @@ func findBestAudioFormat(formats youtube.FormatList) *youtube.Format {
 		}
 	}
 	return best
+}
+
+func wrapError(err error) string {
+    msg := err.Error()
+    switch {
+    case strings.Contains(msg, "permission denied"):
+        return "Storage permission denied. Please contact system administrator."
+    case strings.Contains(msg, "no space left"):
+        return "Disk space exhausted. Cannot complete download."
+    case strings.Contains(msg, "ffmpeg"):
+        return "Media processing error (FFmpeg failed). Please try again."
+    case strings.Contains(msg, "cipher") || strings.Contains(msg, "signature"):
+        return "YouTube restricted access to this video (Cipher/Signature error)."
+    case strings.Contains(msg, "403"):
+        return "Access forbidden. YouTube might be throttling the server IP."
+    default:
+        // Genel teknik hata mesajı (Path ifşasını önler)
+        return "An unexpected technical error occurred during processing."
+    }
 }
